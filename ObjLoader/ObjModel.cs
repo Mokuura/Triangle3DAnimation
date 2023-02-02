@@ -8,8 +8,8 @@ namespace Triangle3DAnimation.ObjLoader
 {
     public class ObjModel
     {
-        private List<ObjVertex> Vertices { get; set; }
-        private List<ObjTextureVertex> TextureVertices { get; set; }
+        public List<ObjVertex> Vertices { get; set; }
+        public List<ObjTextureVertex> TextureVertices { get; set; }
         public List<ObjFace> Faces { get; set; }
 
         public ObjModel(List<ObjVertex> vertices, List<ObjTextureVertex> textureVertices, List<ObjFace> faces) 

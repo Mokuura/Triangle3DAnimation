@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GBX.NET;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,6 +25,12 @@ namespace Triangle3DAnimation.ObjLoader
         public override String ToString()
         {
             return "face :"; // TODO
+        }
+
+        public Int3 getTriangleVerticesInInt3()
+        {
+            // obj format uses 1-based indexing but media tracker triangles uses 0-based indexing
+            return new Int3(V1.Vertex.Index - 1, V2.Vertex.Index - 1, V3.Vertex.Index - 1);
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace Triangle3DAnimation.ObjLoader
+﻿using GBX.NET;
+
+namespace Triangle3DAnimation.ObjLoader
 {
     public class ObjVertex
     {
@@ -21,6 +23,11 @@
         public override String ToString()
         {
             return X + ", " + Y + ", " + Z + ", " + Index;
+        }
+
+        public Vec3 ToVec3() 
+        {
+            return new Vec3(X, Y, Z);   
         }
     }
 }
