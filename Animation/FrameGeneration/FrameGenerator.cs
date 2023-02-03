@@ -8,6 +8,6 @@ namespace Triangle3DAnimation.Animation.FrameGeneration
 {
     public interface FrameGenerator
     {
-        AnimationFrame GenerateFrame(TriangleAnimation current, TmEssentials.TimeSingle time);
+        List<AnimationFrame> GenerateFrames(TriangleAnimation current, TmEssentials.TimeSingle timeEnd);
     }
 }

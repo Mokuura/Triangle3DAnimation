@@ -12,10 +12,10 @@ namespace Triangle3DAnimation.Animation.FrameGeneration
      */
     public class IdentityFrame : FrameGenerator
     {
-        public AnimationFrame GenerateFrame(TriangleAnimation current, TimeSingle time)
+        public List<AnimationFrame> GenerateFrames(TriangleAnimation current, TimeSingle time)
         {
             AnimationFrame lastFrame = current.AnimationFrames[current.AnimationFrames.Count - 1];
-            return new AnimationFrame(lastFrame.VerticesPositions, time);
+            return new List<AnimationFrame> { new AnimationFrame(lastFrame.VerticesPositions, time) };
         }
     }
 }

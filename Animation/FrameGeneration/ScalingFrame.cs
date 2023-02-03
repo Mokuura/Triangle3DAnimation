@@ -18,7 +18,7 @@ namespace Triangle3DAnimation.Animation.FrameGeneration
             ScaleFactor = scaleFactor;
         }
 
-        public AnimationFrame GenerateFrame(TriangleAnimation current, TimeSingle time)
+        public List<AnimationFrame> GenerateFrames(TriangleAnimation current, TimeSingle time)
         {
             AnimationFrame lastFrame = current.AnimationFrames[current.AnimationFrames.Count - 1];
 
@@ -26,7 +26,7 @@ namespace Triangle3DAnimation.Animation.FrameGeneration
             Vec3 barycenter = lastFrame.VerticesPositions.Aggregate(new Vec3(0, 0, 0), (barycenter, next) => barycenter + (next / lastFrame.VerticesPositions.Count));
 
             List<Vec3> newPositions = lastFrame.VerticesPositions.ConvertAll(vertexPosition => ((vertexPosition - barycenter) * ScaleFactor) + barycenter);
-            return new AnimationFrame(newPositions, time);
+            return new List<AnimationFrame> { new AnimationFrame(newPositions, time) };
         }
     }
 }

@@ -20,8 +20,8 @@ namespace Triangle3DAnimation.Animation
         public void CreateNextFrame(FrameGenerator frameGenerator, TimeSingle time)
         {
             // TODO check if time is > time of last frame, print a warning in that case and do not throw an exception
-            AnimationFrame nextFrame = frameGenerator.GenerateFrame(this, time);
-            AnimationFrames.Add(nextFrame);
+            List<AnimationFrame> nextFrame = frameGenerator.GenerateFrames(this, time);
+            AnimationFrames.AddRange(nextFrame);
         }
     }
 }
