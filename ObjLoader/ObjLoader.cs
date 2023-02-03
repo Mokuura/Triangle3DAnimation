@@ -5,19 +5,19 @@ namespace Triangle3DAnimation.ObjLoader
 {
     public class ObjLoader
     {
-        public static ObjModel ParseObj(String filePath)
+        public static ObjModel ParseObj(String workingDirectory, string fileName)
         {
             ObjModelBuilder objModelBuilder = new ObjModelBuilder();
-            String[] fileLines = File.ReadAllLines(filePath);
+            String[] fileLines = File.ReadAllLines(workingDirectory + "\\" + fileName);
             foreach (String line in fileLines)
             {
-                ParseLine(line, objModelBuilder);
+                ParseLine(line, objModelBuilder, workingDirectory);
             }
 
             return objModelBuilder.Build();
         }
 
-        private static void ParseLine(String line, ObjModelBuilder objModelBuilder)
+        private static void ParseLine(String line, ObjModelBuilder objModelBuilder, String workingDirectory)
         {
             String[] separators = new string[] { " ", "\t" };
             String[] tokens = line.Split(separators, StringSplitOptions.RemoveEmptyEntries);
@@ -40,13 +40,16 @@ namespace Triangle3DAnimation.ObjLoader
                     ParseFace(tokens, objModelBuilder);
                     break;
                 case "usemtl":
-                    if (tokens.Length < 2) { return; }
+                    if (tokens.Length < 2) 
+                    {
+                        throw new ArgumentException("error: usemtl must define the material name to be used");                    
+                    }
                     objModelBuilder.setCurrentMaterial(tokens[1]);
                     break;
                 case "mtllib":
                     foreach (String materialFileName in tokens.Skip(1).Take(tokens.Length - 1)) 
                     { 
-                        ParseMtl(materialFileName, objModelBuilder);    
+                        ParseMtl(workingDirectory + "\\" + materialFileName, objModelBuilder);    
                     }
                     break;
                 default:
@@ -120,9 +123,9 @@ namespace Triangle3DAnimation.ObjLoader
             }
         }
 
-        private static void ParseMtl(string materialFileName, ObjModelBuilder objModelBuilder)
+        private static void ParseMtl(string filePath, ObjModelBuilder objModelBuilder)
         {
-            foreach (ObjMaterial objMaterial in MtlLoader.MtlLoader.ParseMtl(materialFileName))
+            foreach (ObjMaterial objMaterial in MtlLoader.MtlLoader.ParseMtl(filePath))
             {
                 objModelBuilder.Materials.Add(objMaterial);
             }
