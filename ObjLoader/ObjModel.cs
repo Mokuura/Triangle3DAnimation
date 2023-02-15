@@ -11,12 +11,14 @@ namespace Triangle3DAnimation.ObjLoader
         public List<ObjVertex> Vertices { get; set; }
         public List<ObjTextureVertex> TextureVertices { get; set; }
         public List<ObjFace> Faces { get; set; }
+        public List<ObjMaterial> Materials { get; set; }
 
-        public ObjModel(List<ObjVertex> vertices, List<ObjTextureVertex> textureVertices, List<ObjFace> faces) 
+        public ObjModel(List<ObjVertex> vertices, List<ObjTextureVertex> textureVertices, List<ObjFace> faces, List<ObjMaterial> materials) 
         {
             Vertices = vertices;
             TextureVertices = textureVertices;
             Faces = faces;
+            Materials = materials;
         }
 
         public override String ToString()

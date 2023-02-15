@@ -10,7 +10,7 @@ namespace Triangle3DAnimation.Animation.FrameGeneration
     /*
      * Generate a frame identical to the previous frame
      */
-    public class IdentityFrame : FrameGenerator
+    public class Identity : FrameGenerator
     {
         public List<AnimationFrame> GenerateFrames(TriangleAnimation current, TimeSingle time)
         {

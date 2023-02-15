@@ -1,14 +1,42 @@
 ﻿using System.Globalization;
+using System.Text.RegularExpressions;
 using Triangle3DAnimation.MtlLoader;
+using static GBX.NET.Engines.Game.CGameCtnChallenge;
 
 namespace Triangle3DAnimation.ObjLoader
 {
     public class ObjLoader
     {
+        public static ObjAnimation ParseObjAnimation(String workingDirectory, string fileName)
+        {
+            ObjAnimation objAnimation = new ObjAnimation();
+            string[] files = Directory.GetFiles(workingDirectory, fileName + "*", SearchOption.TopDirectoryOnly);
+
+            if (files.Length <= 0)
+            {
+                throw new FileNotFoundException();
+            }
+
+            Regex pattern = new Regex(workingDirectory.Replace("\\", "\\\\") + "\\\\" + fileName + "(?<frameNumber>\\d+)\\.obj");
+            foreach (string filePath in files)
+            { 
+                Match match = pattern.Match(filePath);
+                if (match.Success)
+                {
+                    int frameNumber = int.Parse(match.Groups["frameNumber"].Value);
+                    ObjModel objModelForThisFrame = ParseObj(workingDirectory, fileName + frameNumber);
+                    objAnimation.Frames[frameNumber] = objModelForThisFrame;
+                }        
+            }
+
+            return objAnimation;
+        }
+        
+        
         public static ObjModel ParseObj(String workingDirectory, string fileName)
         {
             ObjModelBuilder objModelBuilder = new ObjModelBuilder();
-            String[] fileLines = File.ReadAllLines(workingDirectory + "\\" + fileName);
+            String[] fileLines = File.ReadAllLines(workingDirectory + "\\" + fileName + ".obj");
             foreach (String line in fileLines)
             {
                 ParseLine(line, objModelBuilder, workingDirectory);
@@ -110,7 +138,7 @@ namespace Triangle3DAnimation.ObjLoader
             {
                 int vertexIndex = int.Parse(tokens[0]);
                 int textureVertexIndex = int.Parse(tokens[1]);
-                // vertex normal is ignored
+                // vertex normal is ignored            
                 return new ObjFaceVertex(objModelBuilder.GetVertex(vertexIndex), objModelBuilder.GetTextureVertex(textureVertexIndex));
             } else if (tokens.Length == 2)
             {

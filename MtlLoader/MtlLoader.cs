@@ -78,10 +78,10 @@ namespace Triangle3DAnimation.MtlLoader
                     }
 
                     String textureFilePath = tokens[tokens.Length - 1];
-                    using (MagickImage texture = new MagickImage(filePath + '\\' + textureFilePath))
-                    {
-                        // TODO
-                    }
+                    //using (MagickImage texture = new MagickImage(filePath + '\\' + textureFilePath))
+                    //{
+                    //    // TODO
+                    //}
                     break;
                 default:
                     // other types of data are useless for 3D Triangles in Trackmania

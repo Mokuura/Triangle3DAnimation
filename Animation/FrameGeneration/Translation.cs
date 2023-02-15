@@ -8,12 +8,12 @@ using TmEssentials;
 
 namespace Triangle3DAnimation.Animation.FrameGeneration
 {
-    public class TranslationFrame : FrameGenerator
+    public class Translation : FrameGenerator
     {
 
         public Vec3 TranslationVector { get; set; } 
 
-        public TranslationFrame(Vec3 translationVector) 
+        public Translation(Vec3 translationVector) 
         {
             TranslationVector = translationVector;
         }

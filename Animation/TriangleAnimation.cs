@@ -17,7 +17,7 @@ namespace Triangle3DAnimation.Animation
             AnimationFrames = new List<AnimationFrame>();
         }
 
-        public void CreateNextFrame(FrameGenerator frameGenerator, TimeSingle time)
+        public void GenerateFrames(FrameGenerator frameGenerator, TimeSingle time)
         {
             // TODO check if time is > time of last frame, print a warning in that case and do not throw an exception
             List<AnimationFrame> nextFrame = frameGenerator.GenerateFrames(this, time);

@@ -18,22 +18,15 @@ namespace Triangle3DAnimation.Animation
      */
     public class SingleModelTriangleAnimation : TriangleAnimation
     {
-        public ObjModel BaseModel { get; set; }
 
         public List<Vec4> VerticesColor { get; set; }
 
         public List<Int3> Triangles { get; set; }
 
-        private SingleModelTriangleAnimation(ObjModel baseModel) : base() 
+        public SingleModelTriangleAnimation() : base() 
         {
             VerticesColor = new List<Vec4>();
             Triangles = new List<Int3>();
-            BaseModel = baseModel;
-        }
-
-        public static SingleModelTriangleAnimation CreateEmptyAnimationFromObjModel(ObjModel baseModel)
-        {
-            return new SingleModelTriangleAnimation(baseModel);
         }
 
         public CGameCtnMediaBlockTriangles3D ToTriangle3DMediaTrackerBlock(Vec3 position)

@@ -88,7 +88,7 @@ namespace Triangle3DAnimation.ObjLoader
 
         public ObjModel Build()
         {
-            return new ObjModel(Vertices, TextureVertices, Faces);
+            return new ObjModel(Vertices, TextureVertices, Faces, Materials);
         }
     }
 }

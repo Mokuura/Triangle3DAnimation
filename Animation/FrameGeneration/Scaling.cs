@@ -8,12 +8,12 @@ using TmEssentials;
 
 namespace Triangle3DAnimation.Animation.FrameGeneration
 {
-    public class ScalingFrame : FrameGenerator
+    public class Scaling : FrameGenerator
     {
         
         public float ScaleFactor { get; set; }
 
-        public ScalingFrame(float scaleFactor)
+        public Scaling(float scaleFactor)
         {
             ScaleFactor = scaleFactor;
         }

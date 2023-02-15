@@ -8,7 +8,7 @@ using TmEssentials;
 
 namespace Triangle3DAnimation.Animation.FrameGeneration
 {
-    public class RotationFrame : FrameGenerator
+    public class Rotation : FrameGenerator
     {
 
         public float Pitch { get; set; }
@@ -16,7 +16,7 @@ namespace Triangle3DAnimation.Animation.FrameGeneration
         public float Roll { get; set; }
         public int NbSteps { get; set; }
 
-        public RotationFrame(float pitch, float yaw, float roll, int nbSteps)
+        public Rotation(float pitch, float yaw, float roll, int nbSteps)
         {
             Pitch = pitch;
             Yaw = yaw;
