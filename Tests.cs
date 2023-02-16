@@ -1,10 +1,8 @@
 ﻿using GBX.NET;
 using GBX.NET.Engines.Game;
-using ImageMagick;
 using Triangle3DAnimation.Animation;
 using Triangle3DAnimation.Animation.FrameGeneration;
 using Triangle3DAnimation.ObjLoader;
-using static GBX.NET.Engines.Hms.CHmsLightMapCache;
 
 namespace Triangle3DAnimation
 {
@@ -26,8 +24,8 @@ namespace Triangle3DAnimation
                 }
             }
 
-            SingleModelTriangleAnimation animation = new SingleModelTriangleAnimation();
-            animation.GenerateFrames(new BaseAnimation(animationObj, TmEssentials.TimeSingle.FromSeconds(0.1f)), TmEssentials.TimeSingle.FromSeconds(0));
+            SingleBlockTriangleAnimation animation = new SingleBlockTriangleAnimation();
+            animation.AddTransformation(new BaseAnimation(animationObj, TmEssentials.TimeSingle.FromSeconds(0.1f)), TmEssentials.TimeSingle.FromSeconds(0));
             //animation.GenerateFrames(new BaseFrame(model), TmEssentials.TimeSingle.FromSeconds(0));
             //animation.GenerateFrames(new Identity(), TmEssentials.TimeSingle.FromSeconds(2));
             //animation.GenerateFrames(new Translation(new Vec3(100, 100, 100)), TmEssentials.TimeSingle.FromSeconds(2.5f));
@@ -52,16 +50,6 @@ namespace Triangle3DAnimation
             //trackMediaTracker.Blocks.Add(animation.ToTriangle3DMediaTrackerBlock(new Vec3(950f, 17.9f, 920f)));
             trackMediaTracker.Blocks.Add(animation.ToTriangle3DMediaTrackerBlock(new Vec3(500, 10, 500)));
             map.Save();
-
-            //using (MagickImage texture = new MagickImage("C:\\Users\\colin\\OneDrive\\Images\\3x3.png"))
-            //{
-            //    var pixels = texture.GetPixels();
-            //    var pixelValues = pixels.GetValues();
-            //    for (int i = 0; i < pixelValues.Length; i++) 
-            //    {
-            //        Console.WriteLine(pixelValues[i]);
-            //    }
-            //}
         }
     }
 }

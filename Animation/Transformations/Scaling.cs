@@ -6,19 +6,19 @@ using System.Text;
 using System.Threading.Tasks;
 using TmEssentials;
 
-namespace Triangle3DAnimation.Animation.FrameGeneration
+namespace Triangle3DAnimation.Animation.Transformations
 {
-    public class Scaling : FrameGenerator
+    public class Scaling : Transformation
     {
         
         public float ScaleFactor { get; set; }
 
-        public Scaling(float scaleFactor)
+        public Scaling(float scaleFactor, TimeSingle start, TimeSingle end) : base(start, end)
         {
             ScaleFactor = scaleFactor;
         }
 
-        public List<AnimationFrame> GenerateFrames(TriangleAnimation current, TimeSingle time)
+        public override List<AnimationFrame> GenerateFrames(TriangleAnimation current, TimeSingle time)
         {
             AnimationFrame lastFrame = current.AnimationFrames[current.AnimationFrames.Count - 1];
 

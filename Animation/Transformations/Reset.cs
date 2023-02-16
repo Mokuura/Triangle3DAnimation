@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Triangle3DAnimation.Animation
+namespace Triangle3DAnimation.Animation.Transformations
 {
-    public class TriangleAnimation
+    public class Reset : Transformation
     {
     }
 }

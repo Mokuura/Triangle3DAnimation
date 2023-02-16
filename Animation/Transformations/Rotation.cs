@@ -6,9 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using TmEssentials;
 
-namespace Triangle3DAnimation.Animation.FrameGeneration
+namespace Triangle3DAnimation.Animation.Transformations
 {
-    public class Rotation : FrameGenerator
+    public class Rotation : Transformation
     {
 
         public float Pitch { get; set; }
@@ -16,7 +16,7 @@ namespace Triangle3DAnimation.Animation.FrameGeneration
         public float Roll { get; set; }
         public int NbSteps { get; set; }
 
-        public Rotation(float pitch, float yaw, float roll, int nbSteps)
+        public Rotation(float pitch, float yaw, float roll, int nbSteps, TimeSingle start, TimeSingle end) : base(start, end)
         {
             Pitch = pitch;
             Yaw = yaw;
@@ -24,7 +24,7 @@ namespace Triangle3DAnimation.Animation.FrameGeneration
             NbSteps = nbSteps;
         }
 
-        public List<AnimationFrame> GenerateFrames(TriangleAnimation current, TimeSingle time)
+        public override List<AnimationFrame> GenerateFrames(TriangleAnimation current, TimeSingle time)
         {
             AnimationFrame lastFrame = current.AnimationFrames[current.AnimationFrames.Count - 1];
             TimeSingle lastFrameTime = lastFrame.Time;
@@ -45,6 +45,7 @@ namespace Triangle3DAnimation.Animation.FrameGeneration
 
         public Vec3 Rotate(Vec3 vertex)
         {
+            // TODO debug rotation
             var cosa = MathF.Cos(Yaw / NbSteps);
             var sina = MathF.Sin(Yaw / NbSteps);
 

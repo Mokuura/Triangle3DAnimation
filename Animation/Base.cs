@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Triangle3DAnimation.Animation
 {
-    public class TriangleAnimation
+    public interface Base
     {
     }
 }
