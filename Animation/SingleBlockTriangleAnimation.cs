@@ -27,47 +27,103 @@ namespace Triangle3DAnimation.Animation
 
         public List<Transformation> Transformations { get; set; }
 
-        public Base BaseOfAnimation { get; set; }
+        public InitTransformation InitTransformation { get; set; }
 
         public TimeSingle Start { get; set; }
 
         public TimeSingle End { get; set; }
 
-        public SingleBlockTriangleAnimation(Base baseOfAnimation, TimeSingle start, TimeSingle end) : base() 
+        public SingleBlockTriangleAnimation(InitTransformation initTransformation) : base() 
         {
             AnimationFrames = new List<AnimationFrame>();
             VerticesColor = new List<Vec4>();
             Triangles = new List<Int3>();
             Transformations = new List<Transformation>();
-            BaseOfAnimation = baseOfAnimation;
-            Start = start;
-            End = end;
+            InitTransformation = initTransformation;
+            Start = InitTransformation.Start;
+            End = InitTransformation.End;
         }
 
         public void AddTransformation(Transformation transformation)
         {
+            if (transformation is InitTransformation)
+            {
+                throw new Exception("error: cannot add a InitTransformation");
+            }
+            
             if (transformation.Start < Start || transformation.End > End)
             {
                 throw new Exception("error: transformation start or end time is outside the animation period");
             }
+
             Transformations.Add(transformation);         
         }
 
         public void GenerateFrames()
         {
-            // TODO divide rotation transformation according to Number of steps
+            List<Transformation> transformations = new List<Transformation>(Transformations);
+            if (InitTransformation is InitAnimation)
+            {
+                transformations.AddRange(((InitAnimation) InitTransformation).getAllInitModel());
+            } else
+            {
+                transformations.Add(InitTransformation);
+            }
 
+            // TODO if InitTransformation is an animation, then ignore all other transformations
+            // (not supported yet)
+            
+            foreach (Transformation transformation in transformations)
+            {
+                if (transformation is Rotation)
+                {
+                    transformations.AddRange(((Rotation) transformation).getAllRotationsPerStep());
+                    transformations.Remove(transformation);
+                }
+            }
 
             List<Transformation> transformationsWithoutPartialOverlap = new List<Transformation>();
-            foreach (Transformation transformation in Transformations) 
+            foreach (Transformation transformation in transformations) 
             {
                 transformationsWithoutPartialOverlap.AddRange(transformation.GetWithoutPartialOverlap(Transformations));
-            }  
-            
-            
-            // TODO generates the frames
+            }
+
+            // merge transformations that fully overlap
+            List<List<Transformation>> OrderedAndGroupedTransformations = new List<List<Transformation>>(); // TODO
+            // TODO check that every transformation in a group has the same start & end
+
+            // apply all the transformations
+            AnimationFrame? lastFrame = null;
+            foreach (List<Transformation> frameTransformations in OrderedAndGroupedTransformations)
+            {
+                AnimationFrame newFrame = GenerateFrameFromTransformation(lastFrame, frameTransformations);
+                AnimationFrames.Add(newFrame);
+                lastFrame = newFrame;
+            }
         }
 
+        public static AnimationFrame GenerateFrameFromTransformation(AnimationFrame? lastFrame, List<Transformation> transformations)
+        {
+            List<Vec3>? newPositions;
+            if (lastFrame == null)
+            {
+                foreach (Transformation transformation in transformations)
+                {
+                    newPositions = transformation.apply(newPositions);
+                    // TODO check that first transformation is of type InitModel
+                }
+            } else
+            {
+                newPositions = lastFrame.VerticesPositions;
+                foreach (Transformation transformation in transformations)
+                {
+                    newPositions = transformation.apply(newPositions); 
+                }
+            }
+
+       
+            return new AnimationFrame(newPositions, transformations[0].End);
+        }
         public CGameCtnMediaBlockTriangles3D ToTriangle3DMediaTrackerBlock(Vec3 position)
         {
             if (AnimationFrames.Count < 2)

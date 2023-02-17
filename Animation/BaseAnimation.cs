@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TmEssentials;
-using Triangle3DAnimation.Animation.FrameGeneration;
+using Triangle3DAnimation.Animation.Transformations;
 using Triangle3DAnimation.ObjLoader;
 
 namespace Triangle3DAnimation.Animation
@@ -19,7 +19,7 @@ namespace Triangle3DAnimation.Animation
             Animation = animation;
         }
 
-        public override List<AnimationFrame> GenerateFrames(TriangleAnimation current, TimeSingle time)
+        public List<AnimationFrame> GenerateFrames(SingleBlockTriangleAnimation current)
         {
             List<AnimationFrame> frames = new List<AnimationFrame>();
             current.GenerateFrames(new BaseFrame(Animation.Frames[1]), time);

@@ -8,5 +8,6 @@ namespace Triangle3DAnimation.Animation
 {
     public interface Base
     {
+        public List<AnimationFrame> GenerateFrames(SingleBlockTriangleAnimation animation);
     }
 }

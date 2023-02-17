@@ -26,11 +26,13 @@ namespace Triangle3DAnimation.Animation.Transformations
             TimeSingle startOfSplit = this.Start;
             foreach (TimeSingle point in points)
             {
-                double prop = 0; // TODO compute with duration of split and total duration
-                Vec3 newTranslationVector = TranslationVector / prop;
+                TimeSingle durationOfSplit = point - startOfSplit;
+                Vec3 newTranslationVector = TranslationVector / (totalDuration / durationOfSplit);
                 result.Add(new Translation(newTranslationVector, startOfSplit, point));
                 startOfSplit = point;
             }
+
+            return result;
         }
 
         public override List<AnimationFrame> GenerateFrames(TriangleAnimation current, TimeSingle time)

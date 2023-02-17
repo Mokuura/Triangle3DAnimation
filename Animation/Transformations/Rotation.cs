@@ -24,6 +24,21 @@ namespace Triangle3DAnimation.Animation.Transformations
             NbSteps = nbSteps;
         }
 
+        public List<Rotation> getAllRotationsPerStep()
+        {
+            TimeSingle totalDuration = this.End - this.Start;
+            TimeSingle stepDuration = totalDuration / NbSteps;
+            List<Rotation> result = new List<Rotation>();
+            TimeSingle startOfStep = this.Start;
+            for (int i = 0; i < NbSteps; i++)
+            {
+                result.Add(new Rotation(Pitch / NbSteps, Yaw / NbSteps, Roll / NbSteps, 1, startOfStep, startOfStep + stepDuration));
+                startOfStep += stepDuration;
+            }
+
+            return result;
+        }
+
         public override List<AnimationFrame> GenerateFrames(TriangleAnimation current, TimeSingle time)
         {
             AnimationFrame lastFrame = current.AnimationFrames[current.AnimationFrames.Count - 1];
