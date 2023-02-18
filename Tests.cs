@@ -1,7 +1,7 @@
 ﻿using GBX.NET;
 using GBX.NET.Engines.Game;
 using Triangle3DAnimation.Animation;
-using Triangle3DAnimation.Animation.FrameGeneration;
+using Triangle3DAnimation.Animation.Transformations;
 using Triangle3DAnimation.ObjLoader;
 
 namespace Triangle3DAnimation
@@ -10,37 +10,18 @@ namespace Triangle3DAnimation
     {
         public static void RunTests(string[] args)
         {
-            ObjModel model = ObjLoader.ObjLoader.ParseObj("C:\\Users\\colin\\OneDrive\\Documents\\GBX.NET", "Lowpoly_tree_sample");
+            ObjModel objModel = ObjLoader.ObjLoader.ParseObj("C:\\Users\\colin\\OneDrive\\Documents\\GBX.NET", "Lowpoly_tree_sample");
             ObjAnimation animationObj = ObjLoader.ObjLoader.ParseObjAnimation("C:\\Users\\colin\\OneDrive\\Documents\\GBX.NET\\AnimationBlender\\blender\\exportOBJ\\wolfNoTextures", "Wolf-Blender-2.82aNoTextures");
 
-            // exemple manipulation materials
-            foreach (var obj in animationObj.Frames.Values) 
-            {
-                foreach (var mat in obj.Materials)
-                {
-                    mat.DiffuseR *= 10;
-                    mat.DiffuseG *= 10;
-                    mat.DiffuseB *= 10;
-                }
-            }
-
-            SingleBlockTriangleAnimation animation = new SingleBlockTriangleAnimation();
-            animation.AddTransformation(new BaseAnimation(animationObj, TmEssentials.TimeSingle.FromSeconds(0.1f)), TmEssentials.TimeSingle.FromSeconds(0));
-            //animation.GenerateFrames(new BaseFrame(model), TmEssentials.TimeSingle.FromSeconds(0));
-            //animation.GenerateFrames(new Identity(), TmEssentials.TimeSingle.FromSeconds(2));
-            //animation.GenerateFrames(new Translation(new Vec3(100, 100, 100)), TmEssentials.TimeSingle.FromSeconds(2.5f));
-            //animation.GenerateFrames(new Translation(new Vec3(-100, -100, -100)), TmEssentials.TimeSingle.FromSeconds(3f));
-            //animation.GenerateFrames(new Translation(new Vec3(100, 300, -100)), TmEssentials.TimeSingle.FromSeconds(3.5f));
-            //animation.GenerateFrames(new Translation(new Vec3(-100, -300, 100)), TmEssentials.TimeSingle.FromSeconds(3.8f));
-            //animation.GenerateFrames(new Scaling(2f), TmEssentials.TimeSingle.FromSeconds(4f));
-            //animation.GenerateFrames(new Scaling(0.5f), TmEssentials.TimeSingle.FromSeconds(4.5f));
-            //animation.GenerateFrames(new Rotation(MathF.PI, MathF.PI, 0, 8), TmEssentials.TimeSingle.FromSeconds(5f));
-            //animation.GenerateFrames(new Rotation(-MathF.PI, -MathF.PI, 0, 8), TmEssentials.TimeSingle.FromSeconds(5.5f));
-            //animation.GenerateFrames(new Rotation(MathF.PI, 0, 0, 8), TmEssentials.TimeSingle.FromSeconds(6f));
-            //animation.GenerateFrames(new Rotation(0, MathF.PI, 0, 8), TmEssentials.TimeSingle.FromSeconds(6.5f));
-            //animation.GenerateFrames(new Rotation(MathF.PI, MathF.PI, MathF.PI, 8), TmEssentials.TimeSingle.FromSeconds(5.5f));
-            //animation.GenerateFrames(new Rotation(MathF.PI, MathF.PI, 0, 8), TmEssentials.TimeSingle.FromSeconds(5.5f));
-            //animation.GenerateFrames(new Rotation(MathF.PI, MathF.PI, MathF.PI, 8), TmEssentials.TimeSingle.FromSeconds(6f));
+            SingleBlockTriangleAnimation animation = new SingleBlockTriangleAnimation(new BaseAnimation(animationObj, TmEssentials.TimeSingle.FromSeconds(0.2f)));
+            animation.AddTransformation(new Scaling(30, TmEssentials.TimeSingle.FromSeconds(0), TmEssentials.TimeSingle.FromSeconds(0.0001f)));
+            animation.AddTransformation(new Rotation(MathF.PI / 16, 0, 0, 1, TmEssentials.TimeSingle.FromSeconds(0), TmEssentials.TimeSingle.FromSeconds(0.0001f)));
+            animation.AddTransformation(new Translation(new Vec3(50, 0, 200), TmEssentials.TimeSingle.FromSeconds(0), TmEssentials.TimeSingle.FromSeconds(6.40f)));
+            //animation.AddTransformation(new Translation(new Vec3(0, 50, 0), TmEssentials.TimeSingle.FromSeconds(0.5f), TmEssentials.TimeSingle.FromSeconds(2)));
+            //animation.AddTransformation(new Rotation(0, 0, 2 * MathF.PI, 32, TmEssentials.TimeSingle.FromSeconds(0), TmEssentials.TimeSingle.FromSeconds(3.20f)));
+            //animation.AddTransformation(new Scaling(3, TmEssentials.TimeSingle.FromSeconds(1.5f), TmEssentials.TimeSingle.FromSeconds(3)));
+            //animation.AddTransformation(new Translation(new Vec3(50, 0, 0), TmEssentials.TimeSingle.FromSeconds(5), TmEssentials.TimeSingle.FromSeconds(6)));
+            animation.GenerateFrames();
 
             var map = GameBox.ParseNode<CGameCtnChallenge>("C:\\Users\\colin\\OneDrive\\Documents\\Trackmania\\Maps\\My Maps\\TestGBXExplorer.Map.Gbx");
             //var map = GameBox.ParseNode<CGameCtnChallenge>("C:\\Users\\colin\\OneDrive\\Documents\\Maniaplanet\\Maps\\My Maps\\TestTriangle3D.Map.Gbx");

@@ -1,4 +1,5 @@
 ﻿using GBX.NET;
+using GBX.NET.Inputs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,19 +23,22 @@ namespace Triangle3DAnimation.Animation
         { 
             Model = model;
         }
-        public List<AnimationFrame> GenerateFrames(SingleBlockTriangleAnimation animation)
-        {
-            List<Vec3> vertices = new List<Vec3>();
-            vertices = Model.Vertices.ConvertAll(vertex => vertex.ToVec3());
 
+        public void InitAnimation(SingleBlockTriangleAnimation animation)
+        {
+            InitAnimation(Model, animation);
+        }
+
+        public static void InitAnimation(ObjModel model, SingleBlockTriangleAnimation animation)
+        {
             // on the base frame, we also init triangles and vertices color
             animation.Triangles.Clear();
-            animation.Triangles = Model.Faces.ConvertAll(face => face.getTriangleVerticesInInt3());
+            animation.Triangles = model.Faces.ConvertAll(face => face.getTriangleVerticesInInt3());
 
             animation.VerticesColor.Clear();
 
-            animation.VerticesColor = Enumerable.Repeat(new Vec4(1, 1, 1, 1), vertices.Count).ToList(); // init
-            Model.Faces.ForEach(face =>
+            animation.VerticesColor = Enumerable.Repeat(new Vec4(1, 1, 1, 1), model.Vertices.Count).ToList(); // init
+            model.Faces.ForEach(face =>
             {
                 // TODO check if Material is null
                 // TODO check if Material.Texture not null, otherwise find another color
@@ -46,8 +50,11 @@ namespace Triangle3DAnimation.Animation
                 animation.VerticesColor[face.V2.Vertex.Index - 1] = color;
                 animation.VerticesColor[face.V3.Vertex.Index - 1] = color;
             });
+        }
 
-            return new List<AnimationFrame> { new AnimationFrame(vertices, time) };
+        public AnimationFrame GetFirstFrame(TimeSingle time)
+        {
+            return new AnimationFrame(Model.Vertices.ConvertAll(vertex => vertex.ToVec3()), time);
         }
     }
 }

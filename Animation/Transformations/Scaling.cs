@@ -18,15 +18,33 @@ namespace Triangle3DAnimation.Animation.Transformations
             ScaleFactor = scaleFactor;
         }
 
-        public override List<AnimationFrame> GenerateFrames(TriangleAnimation current, TimeSingle time)
+        public override List<Transformation> SplitOn(List<TimeSingle> points)
         {
-            AnimationFrame lastFrame = current.AnimationFrames[current.AnimationFrames.Count - 1];
+            points.Sort();
+            List<Transformation> result = new List<Transformation>();
+            TimeSingle totalDuration = this.End - this.Start;
+            TimeSingle startOfSplit = this.Start;
+            float scale = 1;
+            foreach (TimeSingle point in points)
+            {
+                TimeSingle durationOfSplit = point - startOfSplit;
+                float normalizedTime = durationOfSplit / (End - startOfSplit);
+                float scaleAtPoint = scale + (ScaleFactor - scale) * normalizedTime;                
+                float newScaleFactor = scaleAtPoint / scale;
+                scale = scaleAtPoint;
+                result.Add(new Scaling(newScaleFactor, startOfSplit, point));
+                startOfSplit = point;
+            }
 
+            return result;
+        }
+
+        public override List<Vec3> apply(List<Vec3> oldPositions)
+        {
             // compute barycenter
-            Vec3 barycenter = lastFrame.VerticesPositions.Aggregate(new Vec3(0, 0, 0), (barycenter, next) => barycenter + (next / lastFrame.VerticesPositions.Count));
+            Vec3 barycenter = oldPositions.Aggregate(new Vec3(0, 0, 0), (barycenter, next) => barycenter + (next / oldPositions.Count));
 
-            List<Vec3> newPositions = lastFrame.VerticesPositions.ConvertAll(vertexPosition => ((vertexPosition - barycenter) * ScaleFactor) + barycenter);
-            return new List<AnimationFrame> { new AnimationFrame(newPositions, time) };
+            return oldPositions.ConvertAll(vertexPosition => ((vertexPosition - barycenter) * ScaleFactor) + barycenter);
         }
     }
 }

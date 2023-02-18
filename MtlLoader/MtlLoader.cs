@@ -1,5 +1,4 @@
-﻿using ImageMagick;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Globalization;
 using Triangle3DAnimation.ObjLoader;
 

@@ -39,36 +39,42 @@ namespace Triangle3DAnimation.Animation.Transformations
             return result;
         }
 
-        public override List<AnimationFrame> GenerateFrames(TriangleAnimation current, TimeSingle time)
+        public override List<Transformation> SplitOn(List<TimeSingle> points)
         {
-            AnimationFrame lastFrame = current.AnimationFrames[current.AnimationFrames.Count - 1];
-            TimeSingle lastFrameTime = lastFrame.Time;
-            TimeSingle stepTime = (time - lastFrameTime) / NbSteps;
-
-            List<AnimationFrame> frames = new List<AnimationFrame>();
-            for (int i = 0; i < NbSteps; i++)
+            points.Sort();
+            List<Transformation> result = new List<Transformation>();
+            TimeSingle totalDuration = this.End - this.Start;
+            TimeSingle startOfSplit = this.Start;
+            foreach (TimeSingle point in points)
             {
-                // compute barycenter
-                Vec3 barycenter = lastFrame.VerticesPositions.Aggregate(new Vec3(0, 0, 0), (barycenter, next) => barycenter + (next / lastFrame.VerticesPositions.Count));
-
-                List<Vec3> newPositions = lastFrame.VerticesPositions.ConvertAll(vertexPosition => (Rotate(vertexPosition - barycenter)) + barycenter);
-                lastFrame = new AnimationFrame(newPositions, lastFrameTime + (stepTime * (i + 1)));
-                frames.Add(lastFrame);
+                TimeSingle durationOfSplit = point - startOfSplit;
+                float newPitch = Pitch / (totalDuration / durationOfSplit);
+                float newYaw = Yaw / (totalDuration / durationOfSplit);
+                float newRoll = Roll / (totalDuration / durationOfSplit);
+                result.Add(new Rotation(newPitch, newYaw, newRoll, 1, startOfSplit, point));
+                startOfSplit = point;
             }
-            return frames;
+
+            return result;
+        }
+
+        public override List<Vec3> apply(List<Vec3> oldPositions)
+        {
+            Vec3 barycenter = oldPositions.Aggregate(new Vec3(0, 0, 0), (barycenter, next) => barycenter + (next / oldPositions.Count));
+            return oldPositions.ConvertAll(vertexPosition => (Rotate(vertexPosition - barycenter)) + barycenter);
         }
 
         public Vec3 Rotate(Vec3 vertex)
         {
             // TODO debug rotation
-            var cosa = MathF.Cos(Yaw / NbSteps);
-            var sina = MathF.Sin(Yaw / NbSteps);
+            var cosa = MathF.Cos(Yaw);
+            var sina = MathF.Sin(Yaw);
 
-            var cosb = MathF.Cos(Pitch / NbSteps);
-            var sinb = MathF.Sin(Pitch / NbSteps );
+            var cosb = MathF.Cos(Pitch);
+            var sinb = MathF.Sin(Pitch);
 
-            var cosc = MathF.Cos(Roll / NbSteps);
-            var sinc = MathF.Sin(Roll / NbSteps);
+            var cosc = MathF.Cos(Roll);
+            var sinc = MathF.Sin(Roll);
 
             var Axx = cosa * cosb;
             var Axy = cosa * sinb * sinc - sina * cosc;

@@ -10,7 +10,6 @@ namespace Triangle3DAnimation.Animation.Transformations
 {
     public class Translation : Transformation
     {
-
         public Vec3 TranslationVector { get; set; } 
 
         public Translation(Vec3 translationVector, TimeSingle start, TimeSingle end) : base(start, end) 
@@ -35,11 +34,9 @@ namespace Triangle3DAnimation.Animation.Transformations
             return result;
         }
 
-        public override List<AnimationFrame> GenerateFrames(TriangleAnimation current, TimeSingle time)
+        public override List<Vec3> apply(List<Vec3> oldPositions)
         {
-            AnimationFrame lastFrame = current.AnimationFrames[current.AnimationFrames.Count - 1];
-            List<Vec3> newPositions = lastFrame.VerticesPositions.ConvertAll(vertexPosition => vertexPosition + TranslationVector);
-            return new List<AnimationFrame> { new AnimationFrame(newPositions, time) };
+            return oldPositions.ConvertAll(vertexPosition => vertexPosition + TranslationVector);
         }
     }
 }

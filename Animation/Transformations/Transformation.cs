@@ -15,7 +15,7 @@ namespace Triangle3DAnimation.Animation.Transformations
 
         public Transformation(TimeSingle start, TimeSingle end) 
         {
-            if (start > End)
+            if (start > end)
             {
                 throw new ArgumentException("error: start time should be lower than end time");
             }
@@ -28,38 +28,24 @@ namespace Triangle3DAnimation.Animation.Transformations
             List<TimeSingle> overlapingPoints = new List<TimeSingle>();
             foreach (Transformation otherTransformation in transformations)
             {
-                if (otherTransformation.End <= Start || otherTransformation.Start >= End)
+                if (otherTransformation.Start > Start && otherTransformation.Start < End)
                 {
-                    // no overlap
-                    continue;
-                }
-
-                if (otherTransformation.End > Start && otherTransformation.Start < Start)
-                {
-                    // only end overlap
-                    overlapingPoints.Add(otherTransformation.End);
-                }
-
-                if (otherTransformation.Start < End && otherTransformation.End > End)
-                {
-                    // only start overlap
                     overlapingPoints.Add(otherTransformation.Start);
                 }
-
-                if (otherTransformation.Start > Start && otherTransformation.End < End)
+                if (otherTransformation.End > Start && otherTransformation.End < End)
                 {
-                    // start and end overlap
-                    overlapingPoints.Add(otherTransformation.Start);
                     overlapingPoints.Add(otherTransformation.End);
                 }
             }
+
+            overlapingPoints.Add(End);
             
             // split on overlaping points
-            return SplitOn(overlapingPoints);
+            return SplitOn(overlapingPoints.Distinct().ToList());            
         }
 
         public abstract List<Transformation> SplitOn(List<TimeSingle> points);
 
-        public abstract List<AnimationFrame> GenerateFrames(TriangleAnimation current, TmEssentials.TimeSingle timeEnd);
+        public abstract List<Vec3> apply(List<Vec3> oldPositions);
     }
 }
