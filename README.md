@@ -46,7 +46,8 @@ SingleBlockTriangleAnimation animationWithMultipleObj = new SingleBlockTriangleA
 // 3 : Add transformations
 // You can add transformations in any order, just by specifying the start time and end time.
 // Your animation will end when the last transformation (the one with the longer end time) is finished.
-// If the last transformation end after the base animation is finished (in the case of animationWithMultipleObj), then the base animation is repeated.
+// If the last transformation end after the base animation is finished (in the case of animationWithMultipleObj), then the 
+// base animation is repeated.
 animationWithSingleObj.AddTransformation(new Translation(
     new Vec3(10, 10, 10), // Translation vector
     TmEssentials.TimeSingle.FromSeconds(0), // start time
