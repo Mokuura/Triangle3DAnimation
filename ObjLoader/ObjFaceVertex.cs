@@ -10,12 +10,9 @@ namespace Triangle3DAnimation.ObjLoader
     {
         public ObjVertex Vertex { get; set; }
 
-        public ObjTextureVertex? TextureVertex { get; set; }
-
-        public ObjFaceVertex(ObjVertex vertex, ObjTextureVertex? textureVertex)
+        public ObjFaceVertex(ObjVertex vertex)
         { 
             Vertex = vertex;
-            TextureVertex = textureVertex;
         }     
     }
 }

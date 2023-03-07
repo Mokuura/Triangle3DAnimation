@@ -61,9 +61,6 @@ namespace Triangle3DAnimation.ObjLoader
                 case "v":
                     ParseVertex(tokens, objModelBuilder);
                     break;
-                case "vt":
-                    ParseTextureVertex(tokens, objModelBuilder);
-                    break;
                 case "f":
                     ParseFace(tokens, objModelBuilder);
                     break;
@@ -101,19 +98,6 @@ namespace Triangle3DAnimation.ObjLoader
             objModelBuilder.AddVertex(x, y, z);
         }
 
-        private static void ParseTextureVertex(String[] tokens, ObjModelBuilder objModelBuilder)
-        {
-            if (tokens.Length < 3)
-            {
-                throw new ArgumentException("error : texture vertex must have u and v value");
-            }
-            float u = float.Parse(tokens[1], CultureInfo.InvariantCulture);
-            float v = float.Parse(tokens[2], CultureInfo.InvariantCulture);
-            // w is ignored
-
-            objModelBuilder.AddTextureVertex(u, v);
-        }
-
         private static void ParseFace(String[] tokens, ObjModelBuilder objModelBuilder)
         {
             if (tokens.Length < 4) 
@@ -134,17 +118,11 @@ namespace Triangle3DAnimation.ObjLoader
             String[] separators = new string[] { "//", "/" };
             String[] tokens = faceVertexDefinition.Split(separators, StringSplitOptions.RemoveEmptyEntries);
 
-            if (tokens.Length == 3) 
+            if (tokens.Length >= 2) 
             {
                 int vertexIndex = int.Parse(tokens[0]);
-                int textureVertexIndex = int.Parse(tokens[1]);
-                // vertex normal is ignored            
-                return new ObjFaceVertex(objModelBuilder.GetVertex(vertexIndex), objModelBuilder.GetTextureVertex(textureVertexIndex));
-            } else if (tokens.Length == 2)
-            {
-                int vertexIndex = int.Parse(tokens[0]);
-                // vertex normal is ignored
-                return new ObjFaceVertex(objModelBuilder.GetVertex(vertexIndex), null);
+                // vertex normal and texture is ignored            
+                return new ObjFaceVertex(objModelBuilder.GetVertex(vertexIndex));
             } else
             {
                 throw new ArgumentException("error : a face vertex must reference at least one vertex");

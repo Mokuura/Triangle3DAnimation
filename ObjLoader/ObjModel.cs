@@ -9,14 +9,12 @@ namespace Triangle3DAnimation.ObjLoader
     public class ObjModel
     {
         public List<ObjVertex> Vertices { get; set; }
-        public List<ObjTextureVertex> TextureVertices { get; set; }
         public List<ObjFace> Faces { get; set; }
         public List<ObjMaterial> Materials { get; set; }
 
-        public ObjModel(List<ObjVertex> vertices, List<ObjTextureVertex> textureVertices, List<ObjFace> faces, List<ObjMaterial> materials) 
+        public ObjModel(List<ObjVertex> vertices, List<ObjFace> faces, List<ObjMaterial> materials) 
         {
             Vertices = vertices;
-            TextureVertices = textureVertices;
             Faces = faces;
             Materials = materials;
         }
@@ -28,11 +26,6 @@ namespace Triangle3DAnimation.ObjLoader
             foreach (ObjVertex vertex in Vertices)
             {
                 toReturn += vertex.ToString() + "\n";
-            }
-            toReturn += "textures vertices :\n";
-            foreach (ObjTextureVertex textureVertex in TextureVertices)
-            {
-                toReturn += textureVertex.ToString() + "\n";
             }
             toReturn += "faces :\n";
             foreach (ObjFace face in Faces)

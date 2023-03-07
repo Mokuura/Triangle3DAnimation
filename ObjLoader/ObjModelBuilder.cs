@@ -6,8 +6,6 @@ namespace Triangle3DAnimation.ObjLoader
     {
         public List<ObjVertex> Vertices { get; set; }
 
-        public List<ObjTextureVertex> TextureVertices { get; set; }
-
         public List<ObjFace> Faces { get; set; }
 
         public List<ObjMaterial> Materials { get; set; }
@@ -21,7 +19,6 @@ namespace Triangle3DAnimation.ObjLoader
         public ObjModelBuilder()
         {
             Vertices = new List<ObjVertex>();
-            TextureVertices = new List<ObjTextureVertex>();
             Materials = new List<ObjMaterial>();
             Faces = new List<ObjFace>();
             VertexCount = 0;
@@ -32,12 +29,6 @@ namespace Triangle3DAnimation.ObjLoader
         {
             VertexCount++;
             Vertices.Add(new ObjVertex(x, y, z, VertexCount));
-        }
-
-        public void AddTextureVertex(float u, float v)
-        {
-            TextureVertexCount++;
-            TextureVertices.Add(new ObjTextureVertex(u, v, TextureVertexCount));
         }
 
         public void AddFace(List<ObjFaceVertex> faceVertices) 
@@ -65,16 +56,6 @@ namespace Triangle3DAnimation.ObjLoader
             throw new ArgumentException("error : vertex at index " + index + " not found");
         }
 
-        public ObjTextureVertex GetTextureVertex(int index)
-        {
-            foreach (ObjTextureVertex objTextureVertex in TextureVertices) 
-            {
-                if (objTextureVertex.Index == index) return objTextureVertex;
-            }
-            // not found
-            throw new ArgumentException("error : texture vertex at index " + index + " not found");
-        }
-
         public void setCurrentMaterial(String materialName)
         {
             foreach (ObjMaterial objMaterial in Materials)
@@ -88,7 +69,7 @@ namespace Triangle3DAnimation.ObjLoader
 
         public ObjModel Build()
         {
-            return new ObjModel(Vertices, TextureVertices, Faces, Materials);
+            return new ObjModel(Vertices, Faces, Materials);
         }
     }
 }

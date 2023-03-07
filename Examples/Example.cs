@@ -9,11 +9,11 @@ using Triangle3DAnimation.Animation.Transformations;
 using Triangle3DAnimation.Animation;
 using Triangle3DAnimation.ObjLoader;
 
-namespace Triangle3DAnimation
+namespace Triangle3DAnimation.Examples
 {
-    internal class TestExample
+    internal class Example
     {
-        public static void RunTests(string[] args)
+        public static void RunExample(string[] args)
         {
             // 1 : Load your obj files
             // You can either load a single obj file, or an animation in the form of one obj file per frame,
@@ -90,7 +90,7 @@ namespace Triangle3DAnimation
             // Based on all the transformations you added, all the frames will be created
             animationWithSingleObj.GenerateFrames();
             animationWithMultipleObj.GenerateFrames();
-            
+
             // 5 : Export to Trackmania
             // Using GBX.NET, add the animation to your map.
             var map = GameBox.ParseNode<CGameCtnChallenge>("PATH_TO_YOUR_MAP");
