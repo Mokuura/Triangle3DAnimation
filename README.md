@@ -13,6 +13,7 @@ Here's an example of what you can do with this tool :
 // 1 : Load your obj files
 // You can either load a single obj file, or an animation in the form of one obj file per frame,
 // with a number at the end corresponding to the frame index (one-based indexing).
+// example : myAnimation1.obj, myAnimation2.obj, myAnimation3.obj
 // If you load an animation, every obj file needs to have the same faces, only the vertex positions
 // can change.
 // If your obj file uses any mtl file, they need to have the same name and be in the same directory.
