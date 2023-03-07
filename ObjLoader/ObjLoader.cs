@@ -81,7 +81,7 @@ namespace Triangle3DAnimation.ObjLoader
                     }
                     break;
                 default:
-                    // other types of data are useless for 3D Triangles in Trackmania
+                    // other types of data are not supported for 3D Triangles in Trackmania
                     break;
             }
         }

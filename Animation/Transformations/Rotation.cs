@@ -66,7 +66,6 @@ namespace Triangle3DAnimation.Animation.Transformations
 
         public Vec3 Rotate(Vec3 vertex)
         {
-            // TODO debug rotation
             var cosa = MathF.Cos(Yaw);
             var sina = MathF.Sin(Yaw);
 

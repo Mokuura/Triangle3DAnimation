@@ -13,10 +13,7 @@ using Triangle3DAnimation.Utils;
 
 namespace Triangle3DAnimation.Animation
 {
-    /**
-     * Generate a frame from the base model
-     * 
-     */
+
     internal class BaseModel : Base
     {
         public ObjModel Model { get; set; }

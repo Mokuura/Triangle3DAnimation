@@ -70,20 +70,8 @@ namespace Triangle3DAnimation.MtlLoader
                         throw new ArgumentException("error: Kd statment must define 1 value (RGB all at once) or 3 values (RGB)");
                     }
                     break;
-                case "map_Kd":
-                    if (tokens.Length < 2)
-                    {
-                        throw new ArgumentException("error: map_KD statment must define a filename");
-                    }
-
-                    String textureFilePath = tokens[tokens.Length - 1];
-                    //using (MagickImage texture = new MagickImage(filePath + '\\' + textureFilePath))
-                    //{
-                    //    // TODO
-                    //}
-                    break;
                 default:
-                    // other types of data are useless for 3D Triangles in Trackmania
+                    // other types of data are not supported for 3D Triangles in Trackmania
                     break;
             }
         }
