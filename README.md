@@ -24,7 +24,7 @@ ObjModel objModel = ObjLoader.ObjLoader.ParseObj("PATH_TO_DIRECTORY", "FILE_NAME
 
 // To load an animation
 // PATH_TO_DIRECTORY is the path of the directory where all the obj files are located
-// FILE_NAME is the name of the obj file without ".obj"
+// FILE_NAME is the name of the obj file without ".obj" and without the frame index
 ObjAnimation objAnimation = ObjLoader.ObjLoader.ParseObjAnimation("PATH_TO_DIRECTORY", "FILE_NAME");
 
 // 2 : Create the base of your animation and build the animation
