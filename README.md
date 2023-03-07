@@ -1,7 +1,7 @@
 # Triangle3DAnimation
 
-Triangle3DAnimation is a tool to generate animations for Trackmania with obj files, using mediatracker triangle3D blocks. 
-It uses GBX.NET to build triangle3D mediatracker blocks, that you can then add to your maps.
+Triangle3DAnimation is a tool to generate animations for Trackmania with mediatracker triangle3D blocks, using obj files.
+It uses GBX.NET to build triangle3D blocks, that you can then add to your maps.
 
 # Usage
 
@@ -45,6 +45,7 @@ SingleBlockTriangleAnimation animationWithMultipleObj = new SingleBlockTriangleA
 // 3 : Add transformations
 // You can add transformations in any order, just by specifying the start time and end time.
 // Your animation will end when the last transformation (the one with the longer end time) is finished.
+// If the last transformation end after the base animation is finished (in the case of animationWithMultipleObj), then the base animation is repeated.
 animationWithSingleObj.AddTransformation(new Translation(
     new Vec3(10, 10, 10), // Translation vector
     TmEssentials.TimeSingle.FromSeconds(0), // start time
@@ -109,3 +110,20 @@ map.Save();
 ```
 
 # Limitations
+
+Triangle3D blocks have quite a lot of limitations in Trackmania, you have to keep them in mind when using this tool.
+Here's a non-exhaustive list of them :
+
+- All your faces must be triangles. If a face defined in an obj is not a triangle, it will be converted to multiple triangles 
+using fan triangulation. It is a very naive method and it doesn't work with non convex faces, so it's better to triangulate 
+using your modeling software.
+
+- Each keyframe contains the coordinates for all vertex. Therefore Triangle3D blocks can take a lot of file space when
+you apply a lot of transformations to them. 
+
+- Triangle3D faces cannot receive light from Trackmania items, only direclty from the sun. If they don't get direct light 
+from the sun, they will inevitably look a bit dark (same with night mood). 
+
+- Triangle3D faces cannot cast shadows on Trackmania blocks and items. Thay also cannot cast shadows on other Triangle3D faces 
+
+- You cannot apply textures to faces, only a single RGB color (you cannot control opacity or roughness either)  

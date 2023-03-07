@@ -24,7 +24,7 @@ namespace Triangle3DAnimation.ObjLoader
 
         public override String ToString()
         {
-            return "face with material : " + (Material == null ? " " : Material.Name); // TODO
+            return "face with material : " + (Material == null ? " " : Material.Name);
         }
 
         public Int3 getTriangleVerticesInInt3()
