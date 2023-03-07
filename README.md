@@ -9,7 +9,7 @@ Start by cloning this repo.
 
 Here's an example of what you can do with this tool :
 
-```
+```C#
 // 1 : Load your obj files
 // You can either load a single obj file, or an animation in the form of one obj file per frame,
 // with a number at the end corresponding to the frame index (one-based indexing).
