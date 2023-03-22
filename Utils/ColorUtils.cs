@@ -9,10 +9,10 @@ namespace Triangle3DAnimation.Utils
         public static Vec4 AddRandomShades(Vec4 color)
         {
             Random random = new Random();
-            float randomDhading = random.NextSingle() * SHADING_DEFAULT_MAX;
-            float r = color.X * (1f - randomDhading);
-            float g = color.Y * (1f - randomDhading);
-            float b = color.Z * (1f - randomDhading);
+            float randomShading = random.NextSingle() * SHADING_DEFAULT_MAX;
+            float r = color.X * (1f - randomShading);
+            float g = color.Y * (1f - randomShading);
+            float b = color.Z * (1f - randomShading);
             return new Vec4(r, g, b, color.W);
         }
     }
