@@ -15,7 +15,7 @@ namespace Triangle3DAnimation.Animation.Transformations
 
         public Transformation(TimeSingle start, TimeSingle end) 
         {
-            if (start > end)
+            if (start >= end)
             {
                 throw new ArgumentException("error: start time should be lower than end time");
             }

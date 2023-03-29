@@ -12,6 +12,11 @@ namespace Triangle3DAnimation.MtlLoader
         {
             List<ObjMaterial> materials = new List<ObjMaterial>();
             currentMaterial = null;
+            if (!File.Exists(filePath))
+            {
+                return materials;
+            }
+
             String[] fileLines = File.ReadAllLines(filePath);
             foreach (String line in fileLines)
             {

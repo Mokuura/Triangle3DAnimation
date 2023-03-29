@@ -13,6 +13,7 @@ Here's an example of what you can do with this tool :
 // 1 : Load your obj files
 // You can either load a single obj file, or an animation in the form of one obj file per frame,
 // with a number at the end corresponding to the frame index (one-based indexing).
+// example : myAnimation1.obj, myAnimation2.obj, myAnimation3.obj
 // If you load an animation, every obj file needs to have the same faces, only the vertex positions
 // can change.
 // If your obj file uses any mtl file, they need to have the same name and be in the same directory.
@@ -45,7 +46,8 @@ SingleBlockTriangleAnimation animationWithMultipleObj = new SingleBlockTriangleA
 // 3 : Add transformations
 // You can add transformations in any order, just by specifying the start time and end time.
 // Your animation will end when the last transformation (the one with the longer end time) is finished.
-// If the last transformation end after the base animation is finished (in the case of animationWithMultipleObj), then the base animation is repeated.
+// If the last transformation end after the base animation is finished (in the case of animationWithMultipleObj), then the 
+// base animation is repeated.
 animationWithSingleObj.AddTransformation(new Translation(
     new Vec3(10, 10, 10), // Translation vector
     TmEssentials.TimeSingle.FromSeconds(0), // start time
