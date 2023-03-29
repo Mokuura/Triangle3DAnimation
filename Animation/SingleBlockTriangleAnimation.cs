@@ -102,6 +102,7 @@ namespace Triangle3DAnimation.Animation
                 {
                     AnimationFrames.Add(new AnimationFrame(lastFrame.VerticesPositions, frameTransformations[0].Start));
                 }
+                lastTransformationEndTime = frameTransformations[0].End;
                 AnimationFrame newFrame = GenerateFrameFromTransformation(baseFrame, frameTransformations.Concat(previousTransformations).ToList());
                 AnimationFrames.Add(newFrame);
                 lastFrame = newFrame;
