@@ -17,17 +17,23 @@ namespace Triangle3DAnimation.Animation
     internal class BaseModel : Base
     {
         public ObjModel Model { get; set; }
-        public BaseModel(ObjModel model)
+        
+        public BaseModel(ObjModel model, float shadingIntensity) : base(shadingIntensity)
         { 
             Model = model;
         }
 
-        public void InitAnimation(SingleBlockTriangleAnimation animation)
+        public BaseModel(ObjModel model) : base()
         {
-            InitAnimation(Model, animation);
+            Model = model;
         }
 
-        public static void InitAnimation(ObjModel model, SingleBlockTriangleAnimation animation)
+        public override void InitAnimation(SingleBlockTriangleAnimation animation)
+        {
+            InitAnimation(Model, animation, ShadingIntensity);
+        }
+
+        public static void InitAnimation(ObjModel model, SingleBlockTriangleAnimation animation, float shadingIntensity)
         {
             // on the base frame, we also init triangles and vertices color
             animation.Triangles.Clear();
@@ -43,11 +49,11 @@ namespace Triangle3DAnimation.Animation
                 {
                     // Opacity (4th value in Vec4) is not supported so just putting 1 by default
                     // Adding small random shades to the color so that 2 faces of same color next to each other are differentiable 
-                    color = ColorUtils.AddRandomShades(new Vec4(face.Material.DiffuseR, face.Material.DiffuseG, face.Material.DiffuseB, 1));    
+                    color = ColorUtils.AddRandomShades(new Vec4(face.Material.DiffuseR, face.Material.DiffuseG, face.Material.DiffuseB, 1), shadingIntensity);    
                 } else
                 {
                     // default
-                    color = ColorUtils.AddRandomShades(new Vec4(0.5f, 0.5f, 0.5f, 1));
+                    color = ColorUtils.AddRandomShades(new Vec4(0.5f, 0.5f, 0.5f, 1), shadingIntensity);
                 }
 
                 if (inRange(face.V1.Vertex.Index - 1, animation.VerticesColor)) animation.VerticesColor[face.V1.Vertex.Index - 1] = color;
@@ -61,7 +67,7 @@ namespace Triangle3DAnimation.Animation
             return (index >= 0) && (index < list.Count);
         }
 
-    public AnimationFrame GetFirstFrame(TimeSingle time)
+        public override AnimationFrame GetFirstFrame(TimeSingle time)
         {
             return new AnimationFrame(Model.Vertices.ConvertAll(vertex => vertex.ToVec3()), time);
         }

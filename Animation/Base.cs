@@ -7,10 +7,23 @@ using TmEssentials;
 
 namespace Triangle3DAnimation.Animation
 {
-    public interface Base
+    public abstract class Base
     {
-        public void InitAnimation(SingleBlockTriangleAnimation animation);
+        public const float SHADING_DEFAULT_INTENSITY = 0.3f;
+        public float ShadingIntensity { get; set; }
 
-        public AnimationFrame GetFirstFrame(TimeSingle time);
+        public Base(float shadinIntensity)
+        {
+            ShadingIntensity = shadinIntensity;
+        }
+
+        public Base()
+        {
+            ShadingIntensity = SHADING_DEFAULT_INTENSITY;
+        }
+
+        abstract public void InitAnimation(SingleBlockTriangleAnimation animation);
+
+        abstract public AnimationFrame GetFirstFrame(TimeSingle time);
     }
 }

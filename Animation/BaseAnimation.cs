@@ -17,18 +17,24 @@ namespace Triangle3DAnimation.Animation
 
         public TimeSingle FrameDuration { get; set; }
 
-        public BaseAnimation(ObjAnimation animation, TimeSingle frameDuration)
+        public BaseAnimation(ObjAnimation animation, TimeSingle frameDuration) : base()
         {
             FrameDuration = frameDuration;
             Animation = animation;
         }
 
-        public void InitAnimation(SingleBlockTriangleAnimation animation)
+        public BaseAnimation(ObjAnimation animation, TimeSingle frameDuration, float shadingIntensity) : base(shadingIntensity)
         {
-            BaseModel.InitAnimation(Animation.Frames[1], animation);    
+            FrameDuration = frameDuration;
+            Animation = animation;
         }
 
-        public AnimationFrame GetFirstFrame(TimeSingle time)
+        public override void InitAnimation(SingleBlockTriangleAnimation animation)
+        {
+            BaseModel.InitAnimation(Animation.Frames[1], animation, ShadingIntensity);    
+        }
+
+        public override AnimationFrame GetFirstFrame(TimeSingle time)
         {
             return new AnimationFrame(Animation.Frames[1].Vertices.ConvertAll(vertex => vertex.ToVec3()), time);
         }
