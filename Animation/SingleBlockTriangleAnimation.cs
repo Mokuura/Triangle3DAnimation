@@ -70,7 +70,10 @@ namespace Triangle3DAnimation.Animation
 
             if (BaseOfAnimation is BaseAnimation)
             {
-                Transformations.AddRange(((BaseAnimation)BaseOfAnimation).GenerateAllTransformations(Start, End));
+                ((BaseAnimation)BaseOfAnimation).GenerateAllTransformations(Start, End).ForEach(transformation =>
+                {
+                    AddTransformation(transformation);
+                });
             } 
 
             if (Transformations.Count <= 0) 
