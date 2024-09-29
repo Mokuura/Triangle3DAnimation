@@ -3,6 +3,8 @@
 Triangle3DAnimation is a tool to generate animations for Trackmania with mediatracker triangle3D blocks, using obj files.
 It uses GBX.NET to build triangle3D blocks, that you can then add to your maps.
 
+example of a map made using this tool : https://trackmania.exchange/maps/101103/volcano-rush
+
 # Usage
 
 Start by cloning this repo.
